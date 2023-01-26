@@ -1,0 +1,49 @@
+ejercicio bases de datos 2 tablas union por join
+
+select * from bandas;
+select * from bandas_discos;
+
+--listar todos los discos de las bandas no alemanas
+
+select * from bandas b
+join bandas_discos bd
+on b.nombre = bd.nombre_banda
+WHERE b.pais<> 'Alemania' AND bd.anio_disco>=2000
+
+--2 listar el disco mas reciente de la banda
+
+
+SELECT b.nombre, max(bd.anio_disco) FROM bandas b
+JOIN bandas_discos bd
+ON b.nombre = bd.nombre_banda
+WHERE b.pais = 'UK' AND b.nombre ilike '%s'
+GROUP BY b.nombre;
+
+SELECT * FROM bandas b
+JOIN bandas_discos bd
+ON b.nombre = bd.nombre_banda
+WHERE b.pais = 'UK' AND b.nombre ilike '%s' order by bd.anio_disco limit 1;
+
+SELECT b.nombre, max(bd.anio_disco) FROM bandas b
+JOIN bandas_discos bd
+ON b.nombre = bd.nombre_banda
+WHERE b.pais = 'UK' AND b.nombre ilike '%s'
+GROUP BY b.nombre;
+
+SELECT * FROM bandas b
+JOIN bandas_discos bd
+ON b.nombre = bd.nombre_banda
+WHERE b.pais = 'UK' AND b.nombre ilike '%s' order by bd.anio_disco desc limit 1;
+
+SELECT * FROM bandas b
+JOIN bandas_discos bd
+ON b.nombre = bd.nombre_banda
+where bd.anio_disco =
+(SELECT max(bd.anio_disco) FROM bandas b
+JOIN bandas_discos bd
+ON b.nombre = bd.nombre_banda
+WHERE b.pais = 'UK' AND b.nombre ilike '%s')
+and b.pais = 'UK' AND b.nombre ilike '%s';
+
+
+-- 3. listar todas las bandas alemanas con al menos una letra k en su nombre que tengan discos publicados en 1999 o superior.
